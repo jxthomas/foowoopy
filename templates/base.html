@@ -1,0 +1,57 @@
+<html lang="en" ng-app="restaurantApp">
+    <head><meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>FooWoo</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Rancho">
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-resource.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
+        <script src="{{ url_for('static', filename='libs/angular-bootstrap/ui-bootstrap-tpls.min.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/controllers.js')}}"></script>
+    </head>
+    <body ng-controller="RestaurantCtrl">
+        <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">FooWoo</a>
+                    <button ng-init="navCollapsed = true" ng-click="navCollapsed=!navCollapsed" class="navbar-toggle">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>  
+                        <span class="icon-bar"></span>
+                    </button></div>
+                <div ng-class="navCollapsed ? 'collapse' : 'not-collapse' " ng-controller="ScrollCtrl" class="navbar-collapse">
+                    <ul class="nav navbar-nav"> 
+                        <li><a ng-click="scrollControl('pre-boro_search')"> Search</a></li>
+                        <li><a ng-click="scrollControl('pre-about')">About</a></li> 
+                        <li><a ng-click="scrollControl('pre-map-canvas')">Contact</a></li>      
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a>NYC Restaurant Data enhanced with Yelp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav> 
+        <div class="container-fluid"><!-- Picture Slider Component  -->
+            <div ng-controller="carouselCtrl" id="carouselCtrl">
+                <carousel interval="myInterval">
+                    <slide ng-repeat="slide in slides" active="slide.active">
+
+                        <img ng-src="{[{slide.image}]}" style="margin:auto;">
+
+                    </slide>
+                </carousel>
+
+            </div>
+            {% block content %}{% endblock %}
+            {% include 'about.html' %}
+            <div id="pre-map-canvas"></div>
+            <div id="map-canvas"></div>     
+            {% include 'footer.html' %}  
+        </div>
+        <script src="{{ url_for('static', filename='js/google_map.js')}}"></script>
+    </body>
+</html>
