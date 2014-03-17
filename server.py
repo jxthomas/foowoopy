@@ -24,7 +24,7 @@ foo_logger.addHandler(log_handler)
 #
 # configure and instantiate Yelp Object
 #
-app.config.from_object('config')
+app.config.from_pyfile('config.py', silent=True)
 app.config.from_envvar('foowoo_config', silent=True)
 
 yelp = Yelp(app.config['CONSUMER_KEY'],app.config['CONSUMER_SECRET'],app.config['TOKEN'],app.config['TOKEN_SECRET'])
