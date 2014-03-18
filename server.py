@@ -2,7 +2,7 @@
  foowoo application
  J. Thomas
 '''
-
+import os
 from flask import Flask,jsonify
 from flask import render_template
 from pymongo import MongoClient
@@ -26,6 +26,23 @@ foo_logger.addHandler(log_handler)
 #
 app.config.from_pyfile('config.py', silent=True)
 app.config.from_envvar('foowoo_config', silent=True)
+#check local environment for config data
+if os.getenv('CONSUMER_KEY'):
+    app.config['CONSUMER_KEY']= os.getenv('CONSUMER_KEY')
+if os.getenv('CONSUMER_SECRET'):
+    app.config['CONSUMER_SECRET'] = os.getenv('CONSUMER_SECRET')
+if os.getenv('TOKEN'):
+    app.config['TOKEN'] = os.getenv('TOKEN')
+if os.getenv('TOKEN_SECRET'):
+    app.config['TOKEN_SECRET'] = os.getenv('TOKEN_SECRET')
+if os.getenv('MONGO_URI'):
+    app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+if os.getenv('MONGO_PORT'):
+    app.config['MONGO_PORT'] = int(os.getenv('MONGO_PORT'))
+if os.getenv('MONGO_USER'):
+    app.config['MONGO_USER'] = os.getenv('MONGO_USER')
+if os.getenv('MONGO_PASSWORD'):
+    app.config['MONGO_PASSWORD'] = os.getenv('MONGO_PASSWORD')
 
 yelp = Yelp(app.config['CONSUMER_KEY'],app.config['CONSUMER_SECRET'],app.config['TOKEN'],app.config['TOKEN_SECRET'])
 
