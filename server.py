@@ -107,7 +107,7 @@ def getByName(name,page):
     print "show name listing for " + restaurantName
 
     # search for restaurant name in MongoDB
-    cursor = collection.find({'dba':{'$regex':'^' + restaurantName}},fields={'_id': False},sort=[('dba',1)]) 
+    cursor = collection.find({'dba':{'$regex':'^' + restaurantName}},projection={'_id': 0},sort=[('dba',1)])
     # get a "page" full of results
     pageData = pager(cursor,page)
     return jsonify({'total_docs': cursor.count(), 'results' : pageData})
@@ -123,7 +123,7 @@ def getByBoro(boroName,page):
     print "show boro listing for " + boroName
 
     # search for boro in MongoDB
-    cursor = collection.find({'boro_name':boroName },fields={'_id': False},sort=[('dba',1)]) 
+    cursor = collection.find({'boro_name':boroName },projection={'_id': 0},sort=[('dba',1)])
     # get a "page" full of results
     pageData = pager(cursor,page)
     return jsonify({'total_docs': cursor.count(), 'results' : pageData})
@@ -141,7 +141,8 @@ def getByCusineBoro(cusine,boroName,page):
     print "show cusine listing for " + cusine + " in " + boroName
 
     # search for cusine/boro in MongoDB
-    cursor = collection.find({'boro_name':boroName, 'cusine_description': cusine },fields={'_id': False},sort=[('dba',1)]) 
+    cursor = collection.find({'boro_name':boroName, 'cusine_description': cusine },\
+                             projection={'_id': False},sort=[('dba',1)])
     # get a "page" full of results
     pageData = pager(cursor,page)
     return jsonify({'total_docs': cursor.count(), 'results' : pageData})
